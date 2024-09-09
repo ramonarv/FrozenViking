@@ -20,6 +20,7 @@ public class GameManager : MonoBehaviour
     public bool Level3;
     public bool Level4;
     public bool Level5;
+    public bool Level6;
     
     private void Awake()
     {
@@ -71,6 +72,7 @@ public class GameManager : MonoBehaviour
         data.Level3 = Level3;
         data.Level4 = Level4;
         data.Level5 = Level5;
+        data.Level6 = Level6;
         bf.Serialize(file, data);
         file.Close();
     }
@@ -96,6 +98,7 @@ public class GameManager : MonoBehaviour
             Level3 = data.Level3;
             Level4 = data.Level4;
             Level5 = data.Level5;
+            Level6 = data.Level6;
 
         }
     }
@@ -114,4 +117,5 @@ class PlayerData
     public bool Level3;
     public bool Level4;
     public bool Level5;
+    public bool Level6;
 }
