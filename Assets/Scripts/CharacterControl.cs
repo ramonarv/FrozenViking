@@ -21,6 +21,13 @@ public class CharacterControl : MonoBehaviour
     public bool grounded;
     public bool doublejump;
 
+    public bool nearBonfire;
+    public float healthRegen = 5f;
+
+    public GameObject projectile;
+    public float launchVelocity = 700f;
+
+
     public Image filler; // This is the image. We'll adjust fillamount value
 
     
@@ -58,6 +65,11 @@ public class CharacterControl : MonoBehaviour
             doublejump = true;
         }
 
+        if(Input.GetKeyDown(KeyCode.F))
+        {
+            animator.SetTrigger("AxeThrow");
+        }
+
         if(Input.GetButtonDown("Jump") && grounded | doublejump)
         {
             if (doublejump && !grounded)
@@ -71,6 +83,26 @@ public class CharacterControl : MonoBehaviour
             }
             animator.SetTrigger("Jump");
         }
+
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            GameObject Axe = Instantiate(projectile, transform.position, transform.rotation);
+
+            float direction = transform.localScale.x > 0 ? 1 : -1;
+
+            Axe.GetComponent<Rigidbody2D>().AddRelativeForce(new Vector3(launchVelocity * direction, 0, 0));
+
+            if (direction == -1)
+            {
+                Vector3 axeScale = Axe.transform.localScale;
+                axeScale.x *= -1;
+                Axe.transform.localScale = axeScale;
+            }
+
+            Destroy(Axe, 1);
+        }
+
+
 
         if (transform.position.y < -15)
         {
@@ -90,6 +122,12 @@ public class CharacterControl : MonoBehaviour
         }
 
         filler.fillAmount = Mathf.Lerp(GameManager.manager.previousHealth / GameManager.manager.maxHealth, GameManager.manager.health / GameManager.manager.maxHealth, counter / maxCounter);
+
+        // regenerating health while near bonfire and holding E
+        if (nearBonfire && Input.GetKey(KeyCode.E))
+        {
+            RegenerateHealth();
+        }
     }
 
 
@@ -115,6 +153,19 @@ public class CharacterControl : MonoBehaviour
             GameManager.manager.maxHealth += 20;
             Destroy(collision.gameObject);
         }
+
+        if(collision.CompareTag("Bonfire"))
+        {
+            nearBonfire = true;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+       if (collision.CompareTag("Bonfire"))
+        {
+            nearBonfire = false;
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -130,5 +181,14 @@ public class CharacterControl : MonoBehaviour
         GameManager.manager.previousHealth = filler.fillAmount * GameManager.manager.maxHealth;
         counter = 0;
         GameManager.manager.health -= damage;
+    }
+
+    private void RegenerateHealth()
+    {
+        GameManager.manager.health += healthRegen * Time.deltaTime;
+        if (GameManager.manager.health > GameManager.manager.maxHealth)
+        {
+            GameManager.manager.health = GameManager.manager.maxHealth;
+        }
     }
 }

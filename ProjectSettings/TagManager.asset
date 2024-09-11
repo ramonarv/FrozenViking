@@ -9,6 +9,7 @@ TagManager:
   - LevelTrigger
   - LevelEnd
   - MaxHealthUp
+  - Bonfire
   layers:
   - Default
   - TransparentFX
