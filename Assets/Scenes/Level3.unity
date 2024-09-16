@@ -175,6 +175,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1cb0d2098ddebf84790786e0e92d597a, type: 3}
+--- !u!4 &25261270 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4805306462835278684, guid: 1cb0d2098ddebf84790786e0e92d597a, type: 3}
+  m_PrefabInstance: {fileID: 25261269}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &49196510
 GameObject:
   m_ObjectHideFlags: 0
@@ -346,6 +351,10 @@ PrefabInstance:
       propertyPath: filler
       value: 
       objectReference: {fileID: 1341480212}
+    - target: {fileID: 1967975040367498502, guid: 8531fd85574fd0c458342c51afb66ebf, type: 3}
+      propertyPath: respawnPoint
+      value: 
+      objectReference: {fileID: 25261270}
     - target: {fileID: 3391269309016718638, guid: 8531fd85574fd0c458342c51afb66ebf, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.79
